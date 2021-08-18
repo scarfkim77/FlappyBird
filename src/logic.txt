@@ -1,0 +1,28 @@
+Model:
+Bird:
+    rect, isAlive, boolean isUpward = false, x, y, speed, lowestY, highestY
+    void changeDirection(int direction): case1: isUpward = true, case2: isUpward = false;
+    void fly(): if (isUpward) y-= speed; if (y < lowestY), y = lowestY; else y += speed...
+    void draw(Graphics g): fly(); draw bird; draw rect; rect move;
+
+Barrier:
+    rect, isOutOfFrame, x, y, height, speed, boolean isTopToBot
+    boolean hasCameToMid(), void rectMove(), void draw(Graphics g)
+
+BarrierLayer:
+    List<Barrier> barrier, height1, height2
+    void checkCollision(), void randomHeight(), void refreshBarriers(), void draw()
+
+Model:
+
+    boolean isGameOver(),
+
+View:
+Panel:
+View:
+
+Controller:
+
+废弃:
+Cloud
+GameFrontGround
