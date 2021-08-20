@@ -19,6 +19,7 @@ public class GameControllerImpl implements ActionListener {
         keyInput = new KeyBoardHandler();
         model = new GameModelImpl();
         view = new GameViewImpl(keyInput);
+        new Timer(33, this).start();
     }
 
     @Override

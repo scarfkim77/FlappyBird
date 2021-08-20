@@ -15,7 +15,7 @@ public class Constant {
     // bg color
     public static final Color BG_COLOR = new Color(0X4B4CF);
 
-    // bird's images
+    // bird's image
     public static final String BIRD_IMG = "img/bird_normal.png";
 
     // barrier's images

@@ -27,14 +27,7 @@ public class GameModelImpl implements GameModel {
         for (Barrier b: barriers) {
             b.move();
         }
-        // if the barrier is out of screen, then remove it from the list
-        // avoid the list containing too many barriers
-        for (int i = 0; i < barriers.size(); i++) {
-            if (!barriers.get(i).isVisible) {
-                barriers.remove(i);
-                i--;
-            }
-        }
+        removeBarriers();
         checkCollision();
     }
 
@@ -44,7 +37,7 @@ public class GameModelImpl implements GameModel {
     private void refreshBarriers() {
         int[] heightsOfTwoBars = randomHeight();
         int size = barriers.size();
-        if (size == 0 || barriers.get(size - 1).hasCameToMid()) {
+        if (size == 0 || barriers.get(size - 1).hasComeToMid()) {
             Barrier topToBot = new Barrier(heightsOfTwoBars[0], true);
             Barrier botToTop = new Barrier(heightsOfTwoBars[1], false);
             barriers.add(topToBot);
@@ -52,15 +45,28 @@ public class GameModelImpl implements GameModel {
         }
     }
 
+    /**
+     * If the barrier has been passed by the bird, and become invisible,
+     * then remove it from the barrier list, avoid too many barriers in the list.
+     */
+    private void removeBarriers() {
+        for (int i = 0; i < barriers.size(); i++) {
+            if (!barriers.get(i).isVisible) {
+                barriers.remove(i);
+                i--;
+            }
+        }
+    }
+
     private int[] randomHeight() {
         // randomly generate a barrier's height in range [100, 500)
         int heightOfTopBar = rand.nextInt(400) + 100;
         int heightOfBotBar = rand.nextInt(400) + 100;
-        // if two barriers meets, then regenerate again
-        if (heightOfTopBar + heightOfBotBar > Constant.FRAME_HEIGHT - 75) {
-            randomHeight();
+        if (heightOfTopBar + heightOfBotBar <= Constant.FRAME_HEIGHT - 75) {
+            return new int[]{heightOfTopBar, heightOfBotBar};
         }
-        return new int[]{heightOfTopBar, heightOfBotBar};
+        // if two barriers are too close, regenerate again
+        return randomHeight();
     }
 
     /**
@@ -77,7 +83,7 @@ public class GameModelImpl implements GameModel {
 
     @Override
     public boolean isGameOver() {
-        return bird.isAlive;
+        return !bird.isAlive;
     }
 
     @Override

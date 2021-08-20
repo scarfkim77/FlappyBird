@@ -1,5 +1,6 @@
 package view;
 
+import common.BackGround;
 import common.Barrier;
 import common.Bird;
 
@@ -17,7 +18,6 @@ public class MainFrame extends Frame {
     private List<Barrier> barriers;
     private BackGround backGround;
 
-
     public MainFrame() {
         setVisible(true);
         setSize(FRAME_WIDTH, FRAME_HEIGHT);
@@ -27,27 +27,13 @@ public class MainFrame extends Frame {
         // frame's size is not allowed to change
         setResizable(false);
         backGround = new BackGround();
-        new run().start();
-    }
-
-    class run extends Thread {
-        @Override
-        public void run() {
-            while (true) {
-                repaint();
-                try {
-                    Thread.sleep(33);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
     }
 
     public void draw(boolean isGameOver, Bird bird, List<Barrier> barriers) {
         this.isGameOver = isGameOver;
         this.bird = bird;
         this.barriers = barriers;
+        repaint();
     }
 
     @Override
@@ -56,12 +42,16 @@ public class MainFrame extends Frame {
             // get the pen of the image
             Graphics graphics = bufferedImage.getGraphics();
             backGround.draw(graphics);
-            drawBird(graphics, bird);
-            for (Barrier b: barriers) {
-                drawBarrier(graphics, b);
+            if (bird != null) {
+                drawBird(graphics, bird);
+            }
+            if (barriers != null) {
+                for (Barrier b: barriers) {
+                    drawBarrier(graphics, b);
+                }
             }
             // draw all pics on screen at the same time
-            g.drawImage(bufferedImage, 0, 0, this);
+            g.drawImage(bufferedImage, 0, 0, null);
         } else {
             String gameOver = "Game Over!";
             g.setColor(Color.red);
@@ -71,16 +61,18 @@ public class MainFrame extends Frame {
     }
 
     private void drawBird(Graphics g, Bird bird) {
-        g.drawImage(bird.img, bird.x, bird.y, this);
+        g.drawImage(bird.img, bird.x, bird.y, null);
+        g.setColor(Color.GRAY);
         g.drawRect(bird.x, bird.y, bird.rect.width, bird.rect.height);
     }
 
     private void drawBarrier(Graphics g, Barrier barrier) {
-        if (barrier.isTopToBot) {
+        if (barrier.isTopBar) {
             drawTopBar(g, barrier);
         } else {
             drawBotBar(g, barrier);
         }
+        g.setColor(Color.GRAY);
         g.drawRect(barrier.x, barrier.y, barrier.width, barrier.height);
     }
 
@@ -90,12 +82,12 @@ public class MainFrame extends Frame {
         // draw the middle part
         for (int i = 0; i < num; i++) {
             g.drawImage(Barrier.img[0], b.x,
-                    b.y + Barrier.BARRIER_HEIGHT * i, this);
+                    b.y + Barrier.BARRIER_HEIGHT * i, null);
         }
         // draw the head
         int xCo = b.x - (Barrier.BARRIER_HEAD_WIDTH - Barrier.BARRIER_WIDTH) / 2;
         int yCo = b.height - Barrier.BARRIER_HEAD_HEIGHT;
-        g.drawImage(Barrier.img[2], xCo, yCo, this);
+        g.drawImage(Barrier.img[2], xCo, yCo, null);
     }
 
     private void drawBotBar(Graphics g, Barrier b) {
@@ -103,11 +95,11 @@ public class MainFrame extends Frame {
         // draw the middle part
         for (int i = 0; i < num; i++) {
             g.drawImage(Barrier.img[0], b.x,
-                    FRAME_HEIGHT - Barrier.BARRIER_HEIGHT * i, this);
+                    FRAME_HEIGHT - Barrier.BARRIER_HEIGHT * i, null);
         }
         // draw the head
         int xCo = b.x - (Barrier.BARRIER_HEAD_WIDTH - Barrier.BARRIER_WIDTH) / 2;
         int yCo = FRAME_HEIGHT - b.height;
-        g.drawImage(Barrier.img[1], xCo, yCo, this);
+        g.drawImage(Barrier.img[1], xCo, yCo, null);
     }
 }

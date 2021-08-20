@@ -1,7 +1,5 @@
 package common;
 
-import view.GameUtil;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -9,11 +7,9 @@ import static common.Constant.*;
 
 public class Bird {
     // bird's image
-    public BufferedImage img;
+    public BufferedImage img = LoadImage.loadBufferedImage(BIRD_IMG);
     // bird's location
     public int x = 200, y = 200;
-    // the range of bird's y-coordinate
-    public int lowestY = 20, highestY = 450;
     // bird's flying direction:
     // isUpward == true, means bird flies upward; downward otherwise
     public boolean isUpward = false;
@@ -23,7 +19,6 @@ public class Bird {
     public Rectangle rect;
 
     public Bird() {
-        img = GameUtil.loadBufferedImage(BIRD_IMG);
         // initialize a minimum rectangle of bird
         rect = new Rectangle(img.getWidth(), img.getHeight());
     }
@@ -32,6 +27,8 @@ public class Bird {
      * Make the bird fly by changing its y-coordinate.
      */
     public void fly() {
+        // the range of bird's y-coordinate
+        int lowestY = 20, highestY = 450;
         if (isUpward) {
             y -= speed;
             if (y < lowestY) {
