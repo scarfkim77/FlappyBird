@@ -32,7 +32,8 @@ public class GameModelImpl implements GameModel {
     }
 
     /**
-     * Conditionally refresh a group of barriers.
+     * If there is no barrier, or the last two barriers have come to mid of frame,
+     * refresh a new group of barriers.
      */
     private void refreshBarriers() {
         int[] heightsOfTwoBars = randomHeight();
@@ -58,6 +59,11 @@ public class GameModelImpl implements GameModel {
         }
     }
 
+    /**
+     * Randomly generate two barriers' height in range[100, 500).
+     * If they are too closed to each other, regenerate again.
+     * @return an int array with size 2
+     */
     private int[] randomHeight() {
         // randomly generate a barrier's height in range [100, 500)
         int heightOfTopBar = rand.nextInt(400) + 100;
@@ -65,7 +71,6 @@ public class GameModelImpl implements GameModel {
         if (heightOfTopBar + heightOfBotBar <= Constant.FRAME_HEIGHT - 75) {
             return new int[]{heightOfTopBar, heightOfBotBar};
         }
-        // if two barriers are too close, regenerate again
         return randomHeight();
     }
 

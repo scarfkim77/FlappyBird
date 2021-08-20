@@ -38,8 +38,12 @@ public class Barrier {
         BARRIER_HEIGHT = img[0].getHeight();
         BARRIER_HEAD_WIDTH = img[1].getWidth();
         BARRIER_HEAD_HEIGHT = img[1].getHeight();
-        if (isTopBar) y = 0;
-        else y = FRAME_HEIGHT - height;
+        if (isTopBar) {
+            y = 0;
+        }
+        else {
+            y = FRAME_HEIGHT - height;
+        }
         this.width = BARRIER_WIDTH;
         this.height = height;
         this.isTopBar = isTopBar;
@@ -47,6 +51,9 @@ public class Barrier {
         rect = new Rectangle(BARRIER_WIDTH, height);
     }
 
+    /**
+     * Move the barrier and its rectangle. Change x-coordinate only.
+     */
     public void move() {
         x -= speed;
         if (x < 35) {

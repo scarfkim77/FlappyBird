@@ -19,7 +19,7 @@ public class Bird {
     public Rectangle rect;
 
     public Bird() {
-        // initialize a minimum rectangle of bird
+        // initialize a minimum rectangle of the bird
         rect = new Rectangle(img.getWidth(), img.getHeight());
     }
 

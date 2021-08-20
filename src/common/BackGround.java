@@ -12,6 +12,10 @@ public class BackGround {
         bgimg = LoadImage.loadBufferedImage(BG_IMG_PATH);
     }
 
+    /**
+     * Draw the background image and paint the frame blue.
+     * @param g
+     */
     public void draw(Graphics g) {
         // use color to fill the bg
         g.setColor(BG_COLOR);

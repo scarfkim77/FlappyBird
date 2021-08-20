@@ -36,11 +36,17 @@ public class MainFrame extends Frame {
         repaint();
     }
 
+    /**
+     * If game is not over, draw the bird and barriers.
+     * Else, draw a "Game Over" string.
+     * @param g
+     */
     @Override
     public void update(Graphics g) {
         if (!isGameOver) {
             // get the pen of the image
             Graphics graphics = bufferedImage.getGraphics();
+            // draw background, bird and barriers
             backGround.draw(graphics);
             if (bird != null) {
                 drawBird(graphics, bird);
